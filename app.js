@@ -12,8 +12,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/translator' , usersRouter);
+app.use('/' , usersRouter);
 
+app.get('/translator/homepage' , (req, res) => {
+
+  res.status(200).json({message: 'Welcome!'});
+})
 
 app.listen(Port , ()=>
 {
