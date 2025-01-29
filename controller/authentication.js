@@ -10,10 +10,9 @@ const signUp = async (req , res) =>{
         const {username, email, password} = req.body;
 
         const checkingUser = await user.findOne({
-            where: {email :email,
-            username : username,}
+            where: {email :email,}
         })
-        if (!checkingUser) {
+        if (checkingUser) {
            return res.status(401).json('user already exist');
         }
 
@@ -29,7 +28,7 @@ const signUp = async (req , res) =>{
 }
 
 
-const login = async(req, res) => {
+const login = async(req, res , next) => {
 
     const {email, password} = req.body
 
@@ -53,6 +52,7 @@ const login = async(req, res) => {
         return res.status(400).json({error: "Invalid token"})
     }
     console.log("User logged in and token generated successfully")
-    return res.status(200).json({token: token})
+     res.status(200).json({token: token})
+    next()
 }
 module.exports = {signUp , login}

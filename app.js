@@ -1,25 +1,25 @@
 const express = require('express');
-const doteenv = require('dotenv');
-doteenv.config();
+const dotenv = require('dotenv');
+dotenv.config();
 const path = require('path');
-const usersRouter = require('./routes/users');
-const Port = process.env.PORT
+const mainRouter = require('./routes/main_router');
+const {login} = require("./controller/authentication");
+const port = 7090
 const app = express()
-app.set('views', path.join(__dirname, 'views'));
+
 app.set('view engine', 'pug');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/' , usersRouter);
+app.use('/' , mainRouter)
 
-app.get('/translator/homepage' , (req, res) => {
 
-  res.status(200).json({message: 'Welcome!'});
-})
 
-app.listen(Port , ()=>
+
+
+app.listen(port , ()=>
 {
-  console.log(`server running at http://localhost:${Port}/`)
+  console.log(`server running at http://localhost:${port}/`)
 })
